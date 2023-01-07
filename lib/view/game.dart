@@ -29,39 +29,46 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade800,
-      body: Column(
-        children: [
-         const SizedBox(height: 10,),
-          Expanded(child: scoreBoard()),
-          Expanded(
-            flex: 3,
-            child: GridView.builder(
-              gridDelegate:
-               const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemCount: 9,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade700),
-                    ),
-                    child: Center(
-                      child: Text(
-                        displayExOh[index],
-                        style:  GoogleFonts.odibeeSans(textStyle: const TextStyle(color: Colors.white, fontSize: 45,letterSpacing: 3)),
+      body: SafeArea(
+        child: Column(
+          children: [
+           const SizedBox(height: 10,),
+            Expanded(child: scoreBoard()),
+            Expanded(
+              flex: 3,
+              child: GridView.builder(
+                gridDelegate:
+                 const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                itemCount: 9,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade700),
+                      ),
+                      child: Center(
+                        child: Text(
+                          displayExOh[index],
+                          style:  GoogleFonts.odibeeSans(textStyle: const TextStyle(color: Colors.white, fontSize: 45,letterSpacing: 3)),
+                        ),
                       ),
                     ),
-                  ),
-                  onTap: () => _tapped(index),
-                );
-              },
+                    onTap: () => _tapped(index),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+            Expanded(child: gameLogo())
+          ],
+        ),
       ),
     );
   }
 
+//Game logo
+gameLogo(){
+  return Text("Tic Tac Toe",style: _scoreBoardTextStyle,);
+}
 //Scoreboard
 scoreBoard(){
  return Row(
@@ -79,6 +86,7 @@ scoreBoard(){
                 Text(player,style: GoogleFonts.odibeeSans(textStyle:_scoreBoardTextStyle),),
                 Divider(color: Colors.grey.shade500,),
                 Text(score.toString(),style: _scoreBoardTextStyle,),
+                
               ],
             );
   }
@@ -107,7 +115,7 @@ scoreBoard(){
   _showWinnerDialog([String? winner]) {
 
     setState(() {
-      ( winner == "O")?_ohScore++:_exScore++;
+      ( winner == "O")?_ohScore++:(winner == "X")?_exScore++:null;
     });
     showDialog(
       
