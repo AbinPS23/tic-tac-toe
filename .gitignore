@@ -45,10 +45,3 @@ app.*.map.json
 
 #ignore this files also
 .metadata
-/linux/
-/linux/*
-/macos/
-/macos/*
-/windows/
-/windows/*
-/pubspec.lock
